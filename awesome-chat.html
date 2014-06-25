@@ -1,0 +1,24 @@
+<head>
+  <title>awesome-chat</title>
+</head>
+
+<body>
+  {{> loginButtons}}
+  <hr>
+  {{> messagesList}}
+</body>
+
+<template name="messagesList">
+  {{#each messages}}
+    {{> messageItem}}
+  {{/each}}
+  <hr>
+  <form>
+    <input type="text" name="" id="">
+    <input type="submit" value="Post">
+  </form>
+</template>
+
+<template name="messageItem">
+  {{user.username}}: {{message}}<br />
+</template>
