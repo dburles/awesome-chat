@@ -24,9 +24,6 @@ if (Meteor.isClient) {
   Template.messagesList.helpers({
     messages: function() {
       return Messages.find({}, { sort: { createdAt: 1 }});
-    },
-    loaded: function() {
-      return bookSearchHandle.ready();
     }
   });
 
@@ -41,6 +38,7 @@ if (Meteor.isServer) {
   Meteor.publish('otherUsers', function() {
     return Meteor.users.find({}, { fields: { username: true }});
   });
+  
   Meteor.publish('allMessages', function() {
     return Messages.find();
   });
