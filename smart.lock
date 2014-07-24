@@ -1,0 +1,27 @@
+{
+  "meteor": {},
+  "dependencies": {
+    "basePackages": {
+      "presence": {},
+      "bootstrap-3": {},
+      "accounts-ui-bootstrap-3": {}
+    },
+    "packages": {
+      "presence": {
+        "git": "https://github.com/dburles/meteor-presence.git",
+        "tag": "v0.4.6",
+        "commit": "7acef78e008bf967c9b2e831c968a6618a92a90a"
+      },
+      "bootstrap-3": {
+        "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
+        "tag": "v3.2.0-1",
+        "commit": "17a63902fc6cf1096c5289d963c66cf28b474727"
+      },
+      "accounts-ui-bootstrap-3": {
+        "git": "https://github.com/mangasocial/meteor-accounts-ui-bootstrap-3.git",
+        "tag": "v0.3.3",
+        "commit": "2e50b605d8d5ed68e48c4529a65f13552d8af3f9"
+      }
+    }
+  }
+}

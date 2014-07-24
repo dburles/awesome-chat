@@ -1,9 +1,9 @@
 Messages = new Meteor.Collection('messages');
 
 if (Meteor.isClient) {
-
-  Meteor.subscribe('allMessages');
+  Meteor.subscribe('messages');
   Meteor.subscribe('otherUsers');
+  Meteor.subscribe('userPresence');
 
   Accounts.ui.config({
     passwordSignupFields: 'USERNAME_ONLY'
@@ -12,18 +12,21 @@ if (Meteor.isClient) {
   Template.messagesList.events({
     'submit form': function(event, template) {
       event.preventDefault();
+      var field = template.$('input[type=text]');
 
       Messages.insert({
         userId: Meteor.userId(),
         createdAt: new Date(),
-        message: template.find('input[type=text]').value
+        message: field.val()
       });
+
+      field.val('');
     }
   });
 
   Template.messagesList.helpers({
     messages: function() {
-      return Messages.find({}, { sort: { createdAt: 1 }});
+      return Messages.find({}, { sort: { createdAt: 1 }, limit: 10 });
     },
     loaded: function() {
       return bookSearchHandle.ready();
@@ -35,13 +38,36 @@ if (Meteor.isClient) {
       return Meteor.users.findOne(this.userId);
     }
   });
+
+  Template.usersList.helpers({
+    presences: function() {
+      return Presences.find({}, { sort: { username: -1 }});
+    }
+  });
+
+  Presence.state = function() {
+    return {
+      username: Meteor.user() ? Meteor.user().username : 'Anonymous'
+    };
+  };
 }
 
 if (Meteor.isServer) {
   Meteor.publish('otherUsers', function() {
     return Meteor.users.find({}, { fields: { username: true }});
   });
-  Meteor.publish('allMessages', function() {
-    return Messages.find();
+
+  Meteor.publish('messages', function() {
+    return Messages.find({}, { sort: { createdAt: -1 }, limit: 10 });
+  });
+
+  Meteor.publish('userPresence', function() {
+    return Presences.find({}, { fields: { state: true, userId: true }});
+  });
+
+  Messages.allow({
+    insert: function (userId, doc) {
+      return true;
+    }
   });
 }

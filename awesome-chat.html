@@ -3,22 +3,85 @@
 </head>
 
 <body>
-  {{> loginButtons}}
-  <hr>
-  {{> messagesList}}
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container container-fluid">
+
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Awesome Chat</a>
+        </div>
+      </div>
+
+      <div class="navbar-collapse collapse" id="main-nav">
+        <ul class="nav navbar-nav navbar-right">
+          {{> loginButtons}}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="col-md-3">{{> usersList}}</div>
+  
+    <div class="col-md-9">
+      {{#if currentUser}}
+        {{> messagesList}}
+      {{else}}
+        <h2>Please sign-in.</h2>
+      {{/if}}
+    </div>
+  </div>
 </body>
 
+<template name="usersList">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Users</h3>
+    </div>
+    <div class="panel-body">
+      {{#each presences}}
+        {{> userItem}}<br>
+      {{/each}}
+    </div>
+  </div>
+</template>
+
+<template name="userItem">
+  {{#with state}}
+    {{username}}
+  {{/with}}
+</template>
+
 <template name="messagesList">
-  {{#each messages}}
-    {{> messageItem}}
-  {{/each}}
+  <table class="table">
+    <tbody>
+      {{#each messages}}
+        {{> messageItem}}
+      {{/each}}
+    </tbody>
+  </table>
   <hr>
-  <form>
-    <input type="text" name="" id="">
-    <input type="submit" value="Post">
+  <form role="form">
+    <div class="form-group">
+      <div class="col-sm-9">
+        <input class="form-control" type="text">
+      </div>
+      <div class="col-sm-3">
+        <input class="form-control" type="submit" value="Post">
+      </div>
+    </div>
   </form>
 </template>
 
 <template name="messageItem">
-  {{user.username}}: {{message}}<br />
+  <tr>
+    <td width="100" align="right"><span class="text-muted">{{user.username}}</span></td>
+    <td>&nbsp; {{message}}</td>
+  </tr>
 </template>
