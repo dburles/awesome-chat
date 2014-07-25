@@ -45,7 +45,7 @@
       <h3 class="panel-title">Users</h3>
     </div>
     <div class="panel-body">
-      {{#each presences}}
+      {{#each users}}
         {{> userItem}}<br>
       {{/each}}
     </div>
@@ -53,9 +53,8 @@
 </template>
 
 <template name="userItem">
-  {{#with state}}
-    {{username}}
-  {{/with}}
+  <i style="color: {{#if isOnline}}#2ECC40{{else}}#DDDDDD{{/if}}" class="glyphicon glyphicon-stop"></i>
+  {{username}}
 </template>
 
 <template name="messagesList">

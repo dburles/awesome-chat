@@ -40,16 +40,16 @@ if (Meteor.isClient) {
   });
 
   Template.usersList.helpers({
-    presences: function() {
-      return Presences.find({}, { sort: { username: -1 }});
+    users: function() {
+      return Meteor.users.find({}, { sort: { username: -1 }});
     }
   });
 
-  Presence.state = function() {
-    return {
-      username: Meteor.user() ? Meteor.user().username : 'Anonymous'
-    };
-  };
+  Template.userItem.helpers({
+    isOnline: function() {
+      return !! Presences.findOne({ userId: this._id });
+    }
+  });
 }
 
 if (Meteor.isServer) {
