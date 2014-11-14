@@ -27,9 +27,6 @@ if (Meteor.isClient) {
   Template.messagesList.helpers({
     messages: function() {
       return Messages.find({}, { sort: { createdAt: 1 }, limit: 10 });
-    },
-    loaded: function() {
-      return bookSearchHandle.ready();
     }
   });
 
